@@ -43,9 +43,12 @@ bintray {
         name = bintrayName
         desc = libraryDescription
         websiteUrl = siteUrl
+        issueTrackerUrl = siteUrl+'/issues'
         vcsUrl = gitUrl
         licenses = allLicenses
-        publish = true
+        githubRepo = githubRepository //Optional Github repository
+        githubReleaseNotesFile = 'README.md' //Optional Github readme file
+        publish = false
         publicDownloadNumbers = true
         version {
             desc = libraryDescription
