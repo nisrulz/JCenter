@@ -24,6 +24,10 @@ ext {
 
     ./gradlew clean build install bintrayUpload -Ppublish=true
 
+// To publish with javadoc Fail on error flag set to false
+
+   ./gradlew clean build install bintrayUpload -Ppublish=true -PjavadocFlag=true    
+
 */
 
 // publish property is checked here first
@@ -58,4 +62,10 @@ if (project.hasProperty('publish') && project.getProperty('publish')) {
   // Place it at the end of the file
   apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/installv1.gradle'
   apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/bintrayv1.gradle'
+
+  if (project.hasProperty('javadocFlag') && project.getProperty('javadocFlag')) {
+    javadoc {
+      failOnError = false
+    }
+  }
 }
