@@ -27,10 +27,14 @@ ext {
     ]
 }
 
-*/
+// Next apply the libconfig.gradle script to the lib module by putting this at the top of the module's build.gradle
+// THIS IS IMPORTANT: libConfig variable referened in this script is from libconfig.gradle script that needs to be included
 
-/*
-// To publish use below
+apply from: '../libconfig.gradle'
+
+// Next sync the project
+
+// Next, to publish use below
 
     ./gradlew clean build install bintrayUpload -Ppublish=true
 
