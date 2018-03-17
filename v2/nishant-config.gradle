@@ -1,0 +1,81 @@
+/*
+// Create a file named libconfig.gradle at root of the project and define ext variables as below
+
+ext {
+    libConfig = [
+            versionCode: 1,
+            versionName: '1.0.0',
+            pomUrl     : 'https://github.com/nisrulz/<repo-name>',
+            githubRepo : 'nisrulz/<repo-name>',
+
+            moduleName : '<module-name>',
+            moduleDesc : '<library-module-description>',
+            bintrayName: '<bintray-lib-repo-name>'
+
+            publishedGroupId: GROUP,
+            developerId     : POM_DEVELOPER_ID,
+            developerName   : POM_DEVELOPER_NAME,
+            developerEmail  : POM_DEVELOPER_EMAILID,
+            licenseName     : POM_LICENCE_NAME,
+            licenseUrl      : POM_LICENCE_URL,
+            allLicenses     : [POM_ALL_LICENCES],
+    ]
+
+    bintray = [
+            user  : BINTRAY_USER,
+            apikey: BINTRAY_APIKEY
+    ]
+}
+
+*/
+
+/*
+// To publish use below
+
+    ./gradlew clean build install bintrayUpload -Ppublish=true
+
+// To publish with javadoc Fail on error flag set to false
+
+   ./gradlew clean build install bintrayUpload -Ppublish=true -PjavadocFlag=true    
+
+*/
+
+// publish property is checked here first
+if (project.hasProperty('publish') && project.getProperty('publish')) {
+    // Bintray Params
+    ext {
+        bintrayRepo = 'maven'
+        bintrayName = libConfig.bintrayName
+
+        publishedGroupId = libConfig.publishedGroupId
+        libraryName = libConfig.moduleName
+        artifact = libConfig.moduleName // Has to be same as your library module name
+
+        libraryDescription = libConfig.moduleDesc
+
+        // Your github repo link
+        siteUrl = libConfig.pomUrl
+        gitUrl = libConfig.pomUrl + '.git'
+        githubRepository = libConfig.githubRepo
+
+        libraryVersion = libConfig.versionName
+
+        developerId = libConfig.developerId
+        developerName = libConfig.developerName
+        developerEmail = libConfig.developerEmail
+
+        licenseName = libConfig.licenseName
+        licenseUrl = libConfig.licenseUrl
+        allLicenses = libConfig.allLicenses
+    }
+
+    // Place it at the end of the file
+    apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/install.gradle'
+    apply from: 'https://raw.githubusercontent.com/nisrulz/JCenter/master/v2/bintray.gradle'
+
+    if (project.hasProperty('javadocFlag') && project.getProperty('javadocFlag')) {
+        javadoc {
+            failOnError = false
+        }
+    }
+}
